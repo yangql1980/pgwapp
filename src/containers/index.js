@@ -3,6 +3,8 @@ import {View, Text, TouchableHighlight, Image, StyleSheet, ListView} from 'react
 
 import styles from '../css/styles';
 import Loading from '../components/loading';
+import Header from '../components/header';
+
 const REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
 const mocked_data = [
     {title: '111', year: '2013', posters: {thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
@@ -58,11 +60,14 @@ class Index extends Component {
             return <Loading />;
         }
         return (
-            <ListView
-                dataSource={this.state.dataSource}
-                renderRow={this.renderMovie}
-                style={movieStyles.listView}
-            />
+            <View>
+                <Header />
+                <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderMovie}
+                    style={movieStyles.listView}
+                />
+            </View>
         );
 
     }

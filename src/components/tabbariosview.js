@@ -1,5 +1,5 @@
-import React, { Component, } from 'react'
-import { View, TabBarIOS} from 'react-native'
+import React, {Component,} from 'react'
+import {View, TabBarIOS} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import About from '../containers/about';
@@ -8,11 +8,11 @@ import Index from '../containers/index';
 
 
 const tabBarItems = [
-    {title: '首页', icon: 'shopping-basket', component: Index},
-    {title: '我要接单', icon: 'book', component: Detail},
-    {title: '我要发布', icon: 'user', component: About},
-    {title: '会员中心', icon: 'user', component: About},
-]
+    {title: '首页', icon: 'home', component: Index},
+    {title: '我要接单', icon: 'reorder', component: Detail},
+    {title: '我要发布', icon: 'pencil-square-o', component: About},
+    {title: '会员中心', icon: 'user', component: Detail},
+];
 
 export default class TabBarIOSView extends React.Component {
 
@@ -43,7 +43,7 @@ export default class TabBarIOSView extends React.Component {
                                     })
                                 }}
                             >
-                                <Component navigator = {this.props.navigator} {...this.props}/>
+                                <Component navigator={this.props.navigator} {...this.props}/>
                             </FontAwesome.TabBarItem>
                         )
                     })
