@@ -33,12 +33,8 @@ export default class Header extends Component {
                     />
                 </View>
                 <View style={styles.rightContainer}>
-                    <Text>
-
-                    </Text>
-                    <Icon.Button name="book" backgroundColor="blue" style={styles.icon}
+                    <Icon.Button name="list" backgroundColor="#ccc" style={styles.icon}
                                  onPress={() => this.context.router.push('/about')}>
-                        快捷菜单
                     </Icon.Button>
                 </View>
             </View>
@@ -56,14 +52,16 @@ const styles = StyleSheet.create({
     image: {
         margin: 0,
         padding: 0,
-        width: 160
+        width: 180
     },
     rightContainer: {
         flex: 1,
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        marginRight:10,
     },
     icon: {
-        width: 100,
+        width: 36,
         borderRadius: 0,
+        alignSelf:'center',
     }
 });

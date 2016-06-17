@@ -1,5 +1,5 @@
 import React, {Component,} from 'react'
-import {View, Text, TouchableHighlight, Image, StyleSheet, ListView} from 'react-native'
+import {View, Text, TouchableOpacity, Image, StyleSheet, ListView} from 'react-native'
 
 import Loading from '../components/loading';
 import SwiperImage from '../components/swiper';
@@ -64,6 +64,29 @@ class Index extends Component {
                 <Header />
                 <SwiperImage />
 
+                <View style={styles.toolContainer}>
+                    <TouchableOpacity onPress={()=>this.context.router.push('/')} >
+                        <Image source={{uri:'http://120.27.108.168/demohtml/app/images/1a.jpg'}}
+                               resizeMode="contain"
+                               style={styles.image}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.context.router.push('/')} >
+                        <Image source={{uri:'http://120.27.108.168/demohtml/app/images/2a.jpg'}}
+                               resizeMode="contain"
+                               style={styles.image}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.context.router.push('/')} >
+                        <Image source={{uri:'http://120.27.108.168/demohtml/app/images/3a.jpg'}}
+                               resizeMode="contain"
+                               style={styles.image}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.context.router.push('/')} >
+                        <Image source={{uri:'http://120.27.108.168/demohtml/app/images/4a.jpg'}}
+                               resizeMode="contain"
+                               onPress={()=>this.context.router.push('/')}
+                               style={styles.image}/>
+                    </TouchableOpacity>
+                </View>
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={this.renderMovie}
@@ -74,9 +97,25 @@ class Index extends Component {
 
     }
 }
-// <View>
-    // <Text style={{color:'white',fontWeight:'bold',fontSize:50,textAlign:'center'}}>午休了!</Text>
-// </View>
+const styles = StyleSheet.create({
+    image: {
+        width: 180,
+        height: 80,
+        marginLeft: 5,
+        marginTop: 5,
+    },
+    toolContainer: {
+        flex: 1,
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: 400,
+        height: 180,
+        backgroundColor:'white',
+        paddingTop: 5,
+        paddingBottom: 5,
+    }
+});
 const movieStyles = StyleSheet.create({
     container: {
         flex: 1,
