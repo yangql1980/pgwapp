@@ -4,8 +4,9 @@ import {View, Text, TouchableOpacity, Image, StyleSheet, ListView} from 'react-n
 import Loading from '../components/loading';
 import SwiperImage from '../components/swiper';
 import Header from '../pages/header';
+import ScrollList from '../pages/scrolllist';
 
-const REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
+// const REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
 
 class Index extends Component {
     static contextTypes = {
@@ -15,9 +16,9 @@ class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataSource: new ListView.DataSource({
-                rowHasChanged: (row1, row2)=>row1 != row2
-            }),
+            // dataSource: new ListView.DataSource({
+            //     rowHasChanged: (row1, row2)=>row1 != row2
+            // }),
             loaded: false
             // loaded: true
         }
@@ -25,35 +26,38 @@ class Index extends Component {
 
     componentDidMount() {
         console.log('home 进入');
-        this.fetchData();
+        setTimeout(()=>this.setState({
+            loaded:true,
+        }),2);
+        // this.fetchData();
     }
+    //
+    // fetchData() {
+    //     fetch(REQUEST_URL)
+    //         .then((response)=>response.json())
+    //         .then((responseData)=> {
+    //             this.setState({
+    //                 dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
+    //                 loaded:true
+    //             });
+    //         })
+    //         .done();
+    // }
 
-    fetchData() {
-        fetch(REQUEST_URL)
-            .then((response)=>response.json())
-            .then((responseData)=> {
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
-                    loaded: true
-                });
-            })
-            .done();
-    }
-
-    renderMovie(movie) {
-        return (
-            <View style={movieStyles.container}>
-                <Image
-                    source={{uri: movie.posters.thumbnail}}
-                    style={movieStyles.thumbnail}
-                />
-                <View style={movieStyles.rightContainer}>
-                    <Text style={movieStyles.title}>{movie.title}</Text>
-                    <Text style={movieStyles.year}>{movie.year}</Text>
-                </View>
-            </View>
-        )
-    }
+    // renderMovie(movie) {
+    //     return (
+    //         <View style={movieStyles.container}>
+    //             <Image
+    //                 source={{uri: movie.posters.thumbnail}}
+    //                 style={movieStyles.thumbnail}
+    //             />
+    //             <View style={movieStyles.rightContainer}>
+    //                 <Text style={movieStyles.title}>{movie.title}</Text>
+    //                 <Text style={movieStyles.year}>{movie.year}</Text>
+    //             </View>
+    //         </View>
+    //     )
+    // }
 
     render() {
         if (!this.state.loaded) {
@@ -87,11 +91,7 @@ class Index extends Component {
                                style={styles.image}/>
                     </TouchableOpacity>
                 </View>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderMovie}
-                    style={movieStyles.listView}
-                />
+                <ScrollList />
             </View>
         );
 

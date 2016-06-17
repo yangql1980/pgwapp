@@ -68,7 +68,7 @@ export  default class SwiperImage extends React.Component {
                     {bannerList.map((banner) => {
                         return (
                             <TouchableOpacity key={banner.name}
-                                              onPress={(banner.link) && (()=>this.context.router.push('/'+banner.link))}
+                                              onPress={banner.link && (()=>this.context.router.push('/'+banner.link))}
                                               activeOpacity={0.75}>
                                 <Image
                                     style={styles.bannerImage}
