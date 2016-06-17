@@ -22,6 +22,7 @@ export  default class SwiperImage extends React.Component {
     static contextTypes = {
         router: React.PropTypes.object.isRequired,
     };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -65,29 +66,17 @@ export  default class SwiperImage extends React.Component {
                     showsButtons={true}
                 >
                     {bannerList.map((banner) => {
-                        if (banner.link)
-                            return (
-                                <TouchableOpacity key={banner.name}
-                                                  onPress={()=>this.context.router.push('/'+banner.link)}
-                                                  activeOpacity={0.75}>
-                                    <Image
-                                        style={styles.bannerImage}
-                                        resizeMode="contain"
-                                        source={{uri: banner.key}}
-                                    />
-                                </TouchableOpacity>
-                            );
-                        else
-                            return (
-                                <TouchableOpacity key={banner.name}
-                                                  activeOpacity={0.75}>
-                                    <Image
-                                        style={styles.bannerImage}
-                                        resizeMode="contain"
-                                        source={{uri: banner.key}}
-                                    />
-                                </TouchableOpacity>
-                            );
+                        return (
+                            <TouchableOpacity key={banner.name}
+                                              onPress={(banner.link) && (()=>this.context.router.push('/'+banner.link))}
+                                              activeOpacity={0.75}>
+                                <Image
+                                    style={styles.bannerImage}
+                                    resizeMode="contain"
+                                    source={{uri: banner.key}}
+                                />
+                            </TouchableOpacity>
+                        );
                     })}
                 </Swiper>
             </View>
