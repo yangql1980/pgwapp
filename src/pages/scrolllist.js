@@ -21,10 +21,11 @@ export default class ScrollList extends React.Component {
                     scrollEventThrottle={200}
                     style={styles.scrollView}>
                     {THUMBS.map(createThumbRow)}
+                    <TouchableOpacity style={styles.button} onPress={() => { _scrollView.scrollTo({y: 0}); }}>
+                        <Text>Scroll to top</Text>
+                    </TouchableOpacity>
                 </ScrollView>
-                <TouchableOpacity style={styles.button} onPress={() => { _scrollView.scrollTo({y: 0}); }}>
-                    <Text>Scroll to top</Text>
-                </TouchableOpacity>
+
             </View>
         )
     }
@@ -62,30 +63,30 @@ var THUMBS = [
 var createThumbRow = (data, i) => <Thumb key={i} data={data} />;
 var styles = StyleSheet.create({
     scrollView: {
-        backgroundColor: '#6A85B1',
-        height: 300,
+        backgroundColor: '#7A96d5',
+        height: 400,
     },
     horizontalScrollView: {
-        height: 120,
+        height: 100,
     },
     containerPage: {
         height: 50,
         width: 50,
-        backgroundColor: '#527FE4',
+        backgroundColor: '#ccc',
         padding: 5,
     },
     text: {
         fontSize: 20,
-        color: '#888888',
+        color: '#887',
         left: 80,
         top: 20,
         height: 40,
     },
     button: {
-        margin: 7,
+        margin: 2,
         padding: 5,
         alignItems: 'center',
-        backgroundColor: '#eaeaea',
+        backgroundColor: '#ccc',
         borderRadius: 3,
     },
     buttonContents: {
