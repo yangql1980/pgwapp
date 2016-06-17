@@ -1,14 +1,12 @@
 import React, {Component,} from 'react'
 import {View, Text, TouchableHighlight, Image, StyleSheet, ListView} from 'react-native'
 
-import styles from '../css/styles';
 import Loading from '../components/loading';
-import Header from '../components/header';
+import SwiperImage from '../components/swiper';
+import Header from '../pages/header';
 
 const REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
-const mocked_data = [
-    {title: '111', year: '2013', posters: {thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
-];
+
 class Index extends Component {
     static contextTypes = {
         router: React.PropTypes.object.isRequired
@@ -21,10 +19,12 @@ class Index extends Component {
                 rowHasChanged: (row1, row2)=>row1 != row2
             }),
             loaded: false
+            // loaded: true
         }
     }
 
     componentDidMount() {
+        console.log('home 进入');
         this.fetchData();
     }
 
@@ -62,6 +62,8 @@ class Index extends Component {
         return (
             <View>
                 <Header />
+                <SwiperImage />
+
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={this.renderMovie}
@@ -72,7 +74,9 @@ class Index extends Component {
 
     }
 }
-
+// <View>
+    // <Text style={{color:'white',fontWeight:'bold',fontSize:50,textAlign:'center'}}>午休了!</Text>
+// </View>
 const movieStyles = StyleSheet.create({
     container: {
         flex: 1,
