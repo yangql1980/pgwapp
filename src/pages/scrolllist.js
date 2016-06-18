@@ -1,23 +1,46 @@
 import  React from  'react';
-import {View, TouchableOpacity, Text, Image, ScrollView, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, Text, Image, ScrollView, StyleSheet,RefreshControl} from 'react-native';
 
 
 export default class ScrollList extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            refreshing: false
+        }
     }
 
     componetDidMount() {
         console.log('滚动列表开始');
     }
 
+    handleScroll() {
+        console.log('handle scroll');
+    }
+
+    _onRefresh() {
+        this.setState({
+            refreshing: true
+        });
+        console.log('上拉刷新');
+        fetch('https://www.baidu.com').then(()=> {
+            this.setState({refreshing: false});
+        })
+    }
+
     render() {
         return (
-            <View>
+            <View style={{height:250}}>
                 <ScrollView
                     ref={(scrollView) => { _scrollView = scrollView; }}
                     automaticallyAdjustContentInsets={false}
-                    onScroll={() => { console.log('onScroll!'); }}
+                    onScroll={this.handleScroll}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing = {this.state.refreshing}
+                            onRefresh={this._onRefresh.bind(this)}
+                        />
+                    }
                     scrollEventThrottle={200}
                     style={styles.scrollView}>
                     {THUMBS.map(createThumbRow)}
@@ -49,18 +72,43 @@ class Thumb extends React.Component {
 
 var THUMBS = [
     {
-        name:'搞工业4.0，离不开对数据灵魂的把握',
-        createtime:'2015-12-01 00:00',
-        description:'大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
+        name: '搞工业4.0，离不开对数据灵魂的把握',
+        createtime: '2015-12-01 00:00',
+        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
     },
     {
-        name:'搞工业4.0，离不开对数据灵魂的把握',
-        createtime:'2015-12-01 00:00',
-        description:'大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
+        name: '搞工业4.0，离不开对数据灵魂的把握',
+        createtime: '2015-12-01 00:00',
+        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
+    },
+    {
+        name: '搞工业4.0，离不开对数据灵魂的把握',
+        createtime: '2015-12-01 00:00',
+        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
+    },
+    {
+        name: '搞工业4.0，离不开对数据灵魂的把握',
+        createtime: '2015-12-01 00:00',
+        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
+    },
+    {
+        name: '搞工业4.0，离不开对数据灵魂的把握',
+        createtime: '2015-12-01 00:00',
+        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
+    },
+    {
+        name: '搞工业4.0，离不开对数据灵魂的把握',
+        createtime: '2015-12-01 00:00',
+        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
+    },
+    {
+        name: '搞工业4.0，离不开对数据灵魂的把握',
+        createtime: '2015-12-01 00:00',
+        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
     },
 ];
 
-var createThumbRow = (data, i) => <Thumb key={i} data={data} />;
+var createThumbRow = (data, i) => <Thumb key={i} data={data}/>;
 var styles = StyleSheet.create({
     scrollView: {
         backgroundColor: '#7A96d5',
