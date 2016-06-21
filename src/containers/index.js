@@ -6,7 +6,6 @@ import SwiperImage from '../components/swiper';
 import Header from '../pages/header';
 import ScrollList from '../pages/scrolllist';
 
-// const REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
 
 class Index extends Component {
     static contextTypes = {
@@ -16,48 +15,17 @@ class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // dataSource: new ListView.DataSource({
-            //     rowHasChanged: (row1, row2)=>row1 != row2
-            // }),
             loaded: false
-            // loaded: true
         }
     }
 
     componentDidMount() {
         console.log('home 进入');
         setTimeout(()=>this.setState({
-            loaded:true,
-        }),2);
-        // this.fetchData();
+            loaded: true,
+        }), 2);
     }
-    //
-    // fetchData() {
-    //     fetch(REQUEST_URL)
-    //         .then((response)=>response.json())
-    //         .then((responseData)=> {
-    //             this.setState({
-    //                 dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
-    //                 loaded:true
-    //             });
-    //         })
-    //         .done();
-    // }
 
-    // renderMovie(movie) {
-    //     return (
-    //         <View style={movieStyles.container}>
-    //             <Image
-    //                 source={{uri: movie.posters.thumbnail}}
-    //                 style={movieStyles.thumbnail}
-    //             />
-    //             <View style={movieStyles.rightContainer}>
-    //                 <Text style={movieStyles.title}>{movie.title}</Text>
-    //                 <Text style={movieStyles.year}>{movie.year}</Text>
-    //             </View>
-    //         </View>
-    //     )
-    // }
 
     render() {
         if (!this.state.loaded) {
@@ -69,22 +37,22 @@ class Index extends Component {
                 <SwiperImage />
 
                 <View style={styles.toolContainer}>
-                    <TouchableOpacity onPress={()=>this.context.router.push('/')} >
+                    <TouchableOpacity onPress={()=>this.context.router.push('/')}>
                         <Image source={{uri:'http://120.27.108.168/demohtml/app/images/1a.jpg'}}
                                resizeMode="contain"
                                style={styles.image}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.context.router.push('/')} >
+                    <TouchableOpacity onPress={()=>this.context.router.push('/')}>
                         <Image source={{uri:'http://120.27.108.168/demohtml/app/images/2a.jpg'}}
                                resizeMode="contain"
                                style={styles.image}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.context.router.push('/')} >
+                    <TouchableOpacity onPress={()=>this.context.router.push('/')}>
                         <Image source={{uri:'http://120.27.108.168/demohtml/app/images/3a.jpg'}}
                                resizeMode="contain"
                                style={styles.image}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.context.router.push('/')} >
+                    <TouchableOpacity onPress={()=>this.context.router.push('/')}>
                         <Image source={{uri:'http://120.27.108.168/demohtml/app/images/4a.jpg'}}
                                resizeMode="contain"
                                onPress={()=>this.context.router.push('/')}
@@ -111,7 +79,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: 400,
         height: 180,
-        backgroundColor:'white',
+        backgroundColor: 'white',
         paddingTop: 5,
         paddingBottom: 5,
     }

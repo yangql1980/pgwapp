@@ -1,5 +1,5 @@
 import React, {Component,} from 'react'
-import {View,Text,Image, StyleSheet} from 'react-native'
+import {View, Text, Image, StyleSheet} from 'react-native'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -16,9 +16,6 @@ export default class Header extends Component {
 
     componentDidMount() {
         console.log('header amount');
-        // Image.getSize('http://120.27.108.168/demohtml/app/images/pglogo.png',(width,height)=>{
-        //
-        // })
     }
 
     render() {
@@ -57,11 +54,11 @@ const styles = StyleSheet.create({
     rightContainer: {
         flex: 1,
         alignItems: 'flex-end',
-        marginRight:10,
+        marginRight: 10,
     },
     icon: {
         width: 36,
         borderRadius: 0,
-        alignSelf:'center',
+        alignSelf: 'center',
     }
 });

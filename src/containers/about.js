@@ -9,10 +9,11 @@ class About extends Component {
         router: React.PropTypes.object.isRequired,
     };
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.key='about';
+        this.key = 'about';
     }
+
     componentDidMount() {
         console.log(window.location);
         console.log('About mount');

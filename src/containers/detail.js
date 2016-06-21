@@ -1,39 +1,39 @@
-import React, { Component, } from 'react'
-import { View,TouchableHighlight,Text,StyleSheet } from 'react-native'
+import React, {Component,} from 'react'
+import {View, TouchableHighlight, Text, StyleSheet} from 'react-native'
 
 import styles from '../css/styles';
 
 class Detail extends Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired,
-  };
-
-  static defaultProps() {
-    return {
-      key: 'detail',
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired,
     };
-  }
 
-  componentDidMount() {
-    console.log(window.location);
+    static defaultProps() {
+        return {
+            key: 'detail',
+        };
+    }
 
-    console.log('About detail');
-  }
+    componentDidMount() {
+        console.log(window.location);
 
-  componentWillUnmount() {
-    console.log('About detail');
-  }
+        console.log('About detail');
+    }
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <TouchableHighlight onPress={() => this.context.router.replace('/')}>
-          <Text style={styles.welcome}>
-            This is detail, Press here to go back home.
-          </Text>
-        </TouchableHighlight>
-      </View>
-    );
-  }
+    componentWillUnmount() {
+        console.log('About detail');
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <TouchableHighlight onPress={() => this.context.router.replace('/')}>
+                    <Text style={styles.welcome}>
+                        This is detail, Press here to go back home.
+                    </Text>
+                </TouchableHighlight>
+            </View>
+        );
+    }
 }
 export default Detail

@@ -1,5 +1,5 @@
 import  React from  'react';
-import {View, TouchableOpacity, Text, Image, ScrollView, StyleSheet,RefreshControl} from 'react-native';
+import {View, TouchableOpacity, Text, Image, ActivityIndicatorIOS,ScrollView, StyleSheet, RefreshControl} from 'react-native';
 
 
 export default class ScrollList extends React.Component {
@@ -14,19 +14,40 @@ export default class ScrollList extends React.Component {
         console.log('滚动列表开始');
     }
 
-    handleScroll() {
-        console.log('handle scroll');
+    handleScroll(e) {
+        console.log(e.nativeEvent);
+        let scrollH = e.nativeEvent.contentSize.height;
+        let y = e.nativeEvent.contentOffset.y;
+        let height = e.nativeEvent.layoutMeasurement.height;
+        console.log('handle scroll', scrollH, y, height);
+        if (scrollH - height < y)
+            this._onEndfresh();
     }
 
+    //上拉刷新
     _onRefresh() {
         this.setState({
             refreshing: true
         });
-        console.log('上拉刷新');
+        console.log('下拉刷新');
         fetch('https://www.baidu.com').then(()=> {
             this.setState({refreshing: false});
         })
+
     }
+
+    //上拉刷新
+    _onEndfresh() {
+        this.setState({
+            refreshing: true
+        });
+        // alert('aaa');
+        console.log('上拉刷新');
+        setTimeout(()=>fetch('https://www.baidu.com').then(()=> {
+            this.setState({refreshing: false});
+        }) ,5000);
+
+    }œ
 
     render() {
         return (
@@ -34,7 +55,7 @@ export default class ScrollList extends React.Component {
                 <ScrollView
                     ref={(scrollView) => { _scrollView = scrollView; }}
                     automaticallyAdjustContentInsets={false}
-                    onScroll={this.handleScroll}
+                    onScroll={(e)=>this.handleScroll(e)}
                     refreshControl={
                         <RefreshControl
                             refreshing = {this.state.refreshing}
@@ -44,11 +65,20 @@ export default class ScrollList extends React.Component {
                     scrollEventThrottle={200}
                     style={styles.scrollView}>
                     {THUMBS.map(createThumbRow)}
-                    <TouchableOpacity style={styles.button} onPress={() => { _scrollView.scrollTo({y: 0}); }}>
-                        <Text>Scroll to top</Text>
-                    </TouchableOpacity>
-                </ScrollView>
+                    {this.state.refreshing?
+                    <ActivityIndicatorIOS
+                        animating={this.state.refreshing}
+                        style={ {height: 80,alignItems: 'center',    justifyContent: 'center',}}
+                        size="large"
+                        color="white"
+                    />
+                        :
+                        <TouchableOpacity style={styles.button} onPress={() => { _scrollView.scrollTo({y: 0}); }}>
+                            <Text>Scroll to top</Text>
+                        </TouchableOpacity>
+                    }
 
+                </ScrollView>
             </View>
         )
     }
