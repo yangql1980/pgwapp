@@ -15,6 +15,8 @@ class Detail extends Component {
   }
 
   componentDidMount() {
+    console.log(window.location);
+
     console.log('About detail');
   }
 
@@ -25,7 +27,7 @@ class Detail extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableHighlight onPress={() => this.context.router.push('/')}>
+        <TouchableHighlight onPress={() => this.context.router.replace('/')}>
           <Text style={styles.welcome}>
             This is detail, Press here to go back home.
           </Text>
