@@ -1,5 +1,5 @@
 import React, {Component,} from 'react'
-import {Text, TouchableHighlight} from 'react-native'
+import {Text} from 'react-native'
 
 import TabBarIOSView from '../components/tabbariosview';
 

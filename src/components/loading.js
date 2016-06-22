@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
-        top: (Common.window.height-80)/2,
-        left: (Common.window.width-100)/2,
+        top: (Common.window.height - 80) / 2,
+        left: (Common.window.width - 100) / 2,
     },
 
     loadingTitle: {

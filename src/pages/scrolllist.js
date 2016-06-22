@@ -1,12 +1,26 @@
 import  React from  'react';
-import {View, TouchableOpacity, Text, Image, ActivityIndicatorIOS,ScrollView, StyleSheet, RefreshControl} from 'react-native';
+import {
+    View,
+    TouchableOpacity,
+    Text,
+    Image,
+    ActivityIndicatorIOS,
+    ScrollView,
+    StyleSheet,
+    RefreshControl,
+  Dimensions
+} from 'react-native';
 
+import * as globalStyles from '../css/styles';
 
 export default class ScrollList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            refreshing: false
+            refreshing: false,
+            dataSource: null,
+            page: 1,
+            scrollStyles:null
         }
     }
 
@@ -15,11 +29,11 @@ export default class ScrollList extends React.Component {
     }
 
     handleScroll(e) {
-        console.log(e.nativeEvent);
+//         console.log(e.nativeEvent);
         let scrollH = e.nativeEvent.contentSize.height;
         let y = e.nativeEvent.contentOffset.y;
         let height = e.nativeEvent.layoutMeasurement.height;
-        console.log('handle scroll', scrollH, y, height);
+//         console.log('handle scroll', scrollH, y, height);
         if (scrollH - height < y)
             this._onEndfresh();
     }
@@ -45,13 +59,24 @@ export default class ScrollList extends React.Component {
         console.log('上拉刷新');
         setTimeout(()=>fetch('https://www.baidu.com').then(()=> {
             this.setState({refreshing: false});
-        }) ,5000);
+        }), 2000);
 
-    }œ
+    }
+
+    _onLayout(e){
+      let y= e.nativeEvent.layout.y;
+      let lefty= window.height-y-45;
+      this.setState({
+        scrollStyles:{
+          height:lefty,
+        }
+      });
+      console.log(lefty);
+    }
 
     render() {
         return (
-            <View style={{height:250}}>
+            <View onLayout={(e)=>this._onLayout(e)} style={this.state.scrollStyles}>
                 <ScrollView
                     ref={(scrollView) => { _scrollView = scrollView; }}
                     automaticallyAdjustContentInsets={false}
@@ -65,13 +90,13 @@ export default class ScrollList extends React.Component {
                     scrollEventThrottle={200}
                     style={styles.scrollView}>
                     {THUMBS.map(createThumbRow)}
-                    {this.state.refreshing?
-                    <ActivityIndicatorIOS
-                        animating={this.state.refreshing}
-                        style={ {height: 80,alignItems: 'center',    justifyContent: 'center',}}
-                        size="large"
-                        color="white"
-                    />
+                    {this.state.refreshing ?
+                        <ActivityIndicatorIOS
+                            animating={this.state.refreshing}
+                            style={ {height: 80,alignItems: 'center',    justifyContent: 'center',}}
+                            size="large"
+                            color="white"
+                        />
                         :
                         <TouchableOpacity style={styles.button} onPress={() => { _scrollView.scrollTo({y: 0}); }}>
                             <Text>Scroll to top</Text>
@@ -139,10 +164,16 @@ var THUMBS = [
 ];
 
 var createThumbRow = (data, i) => <Thumb key={i} data={data}/>;
+
+let window = {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+};
+
 var styles = StyleSheet.create({
     scrollView: {
         backgroundColor: '#7A96d5',
-        height: 400,
+        height: 300,
     },
     horizontalScrollView: {
         height: 100,

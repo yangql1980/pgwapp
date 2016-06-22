@@ -15,7 +15,10 @@ const images = [
         name: 'two',
         link: 'about'
     },
-    {key: 'http://120.27.108.168/demohtml/app/images/banner3.jpg', name: 'three'}
+    {
+        key: 'http://120.27.108.168/demohtml/app/images/banner3.jpg',
+        name: 'three'
+    }
 ];
 
 export  default class SwiperImage extends React.Component {

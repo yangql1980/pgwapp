@@ -1,5 +1,5 @@
 import React, {Component,} from 'react'
-import {View, Text, TouchableOpacity, Image, StyleSheet, ListView} from 'react-native'
+import {View, Text, TouchableOpacity, Image, Dimensions, StyleSheet, ListView} from 'react-native'
 
 import Loading from '../components/loading';
 import SwiperImage from '../components/swiper';
@@ -45,7 +45,7 @@ class Index extends Component {
                     <TouchableOpacity onPress={()=>this.context.router.push('/')}>
                         <Image source={{uri:'http://120.27.108.168/demohtml/app/images/2a.jpg'}}
                                resizeMode="contain"
-                               style={styles.image}/>
+                               style={[styles.image,{marginLeft:5}]}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.context.router.push('/')}>
                         <Image source={{uri:'http://120.27.108.168/demohtml/app/images/3a.jpg'}}
@@ -56,7 +56,7 @@ class Index extends Component {
                         <Image source={{uri:'http://120.27.108.168/demohtml/app/images/4a.jpg'}}
                                resizeMode="contain"
                                onPress={()=>this.context.router.push('/')}
-                               style={styles.image}/>
+                               style={[styles.image,{marginLeft:5}]}/>
                     </TouchableOpacity>
                 </View>
                 <ScrollList />
@@ -65,52 +65,27 @@ class Index extends Component {
 
     }
 }
+
+
+let window = {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+};
+
 const styles = StyleSheet.create({
     image: {
-        width: 180,
-        height: 80,
-        marginLeft: 5,
-        marginTop: 5,
+        width: (window.width - 5) / 2,
+        height: ((window.width - 10) / 2 - 18) / 2,
+        marginTop: 3
     },
     toolContainer: {
         flex: 1,
         flexWrap: 'wrap',
         flexDirection: 'row',
         alignItems: 'center',
-        width: 400,
-        height: 180,
+        width: window.width,
+        height: (window.width - 30) / 2,
         backgroundColor: 'white',
-        paddingTop: 5,
-        paddingBottom: 5,
-    }
-});
-const movieStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    },
-    thumbnail: {
-        width: 52,
-        height: 81,
-        marginLeft: 3
-    },
-    rightContainer: {
-        flex: 1
-    },
-    title: {
-        fontSize: 20,
-        marginBottom: 8,
-        textAlign: 'center'
-    },
-    year: {
-        textAlign: 'center'
-    },
-    listView: {
-        paddingTop: 20,
-        backgroundColor: '#F5FCFF'
     }
 });
 export default Index
