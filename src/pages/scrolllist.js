@@ -8,10 +8,16 @@ import {
     ScrollView,
     StyleSheet,
     RefreshControl,
-  Dimensions
+    Dimensions
 } from 'react-native';
 
-import * as globalStyles from '../css/styles';
+
+
+import api  from '../common/config';
+// import moment from 'moment';
+var moment = require('moment');
+var zh_cn = require('moment/locale/zh-cn');
+import base64_decode from 'locutus/php/url/base64_decode';
 
 export default class ScrollList extends React.Component {
     constructor(props) {
@@ -19,13 +25,57 @@ export default class ScrollList extends React.Component {
         this.state = {
             refreshing: false,
             dataSource: null,
-            page: 1,
-            scrollStyles:null
+            page: 1,  //当前第几页
+            num: 10,   //每页多少条数据
+            scrollStyles: null
         }
     }
 
     componetDidMount() {
         console.log('滚动列表开始');
+        this.fetchData();
+    }
+
+    fetchData(p) {
+        if(parseInt(p)>=1)
+            this.setState({
+                refreshing:true,
+                page:p
+            });
+        console.log('开始读取数据');
+        try {
+            // fetch('http://localhost/api.php')
+            fetch(api.home_article)
+            // fetch('https://www.pgw.com/getapi-index')
+                .then((response) => response.json())
+                .then((responseData)=> {
+                    var data = [];
+                    if (responseData.code == 200) {
+                        console.log(responseData);
+                        // for (i in responseData.data) {
+                        //
+                        //     // i.content = base64_decode(i.content);
+                        //     data.push(i);
+                        // }
+                        data=responseData.data;
+                    } else
+                        data.push({
+                            title: '获取失败',
+                            uptime: moment().format('L'),
+                            content: '网络连接中断,获取数据失败!',
+                        });
+                    console.log(data);
+                    this.setState({
+                        dataSource: data,
+                        refreshing:false,
+                    })
+                    console.log('读取数据结束');
+
+                });
+        }catch (e){
+            console.log(e);
+        }
+
     }
 
     handleScroll(e) {
@@ -44,10 +94,10 @@ export default class ScrollList extends React.Component {
             refreshing: true
         });
         console.log('下拉刷新');
-        fetch('https://www.baidu.com').then(()=> {
-            this.setState({refreshing: false});
-        })
-
+        // fetch('https://www.baidu.com').then(()=> {
+        //     this.setState({refreshing: false});
+        // })
+        this.fetchData(1);
     }
 
     //上拉刷新
@@ -57,21 +107,22 @@ export default class ScrollList extends React.Component {
         });
         // alert('aaa');
         console.log('上拉刷新');
-        setTimeout(()=>fetch('https://www.baidu.com').then(()=> {
-            this.setState({refreshing: false});
-        }), 2000);
-
+        // setTimeout(()=>fetch('https://www.baidu.com').then(()=> {
+        //     this.setState({refreshing: false});
+        // }), 2000);
+        this.fetchData(this.state.page+1);
     }
 
-    _onLayout(e){
-      let y= e.nativeEvent.layout.y;
-      let lefty= window.height-y-45;
-      this.setState({
-        scrollStyles:{
-          height:lefty,
-        }
-      });
-      console.log(lefty);
+    _onLayout(e) {
+        let y = e.nativeEvent.layout.y;
+        let lefty = window.height - y - 45;
+        this.setState({
+            scrollStyles: {
+                height: lefty,
+            }
+        });
+        this.fetchData();
+        // console.log(lefty);
     }
 
     render() {
@@ -89,7 +140,18 @@ export default class ScrollList extends React.Component {
                     }
                     scrollEventThrottle={200}
                     style={styles.scrollView}>
-                    {THUMBS.map(createThumbRow)}
+                    {this.state.dataSource
+                        ?
+                        this.state.dataSource.map(createThumbRow)
+                        :
+                        ()=> {
+                            return (
+                                <Text>
+                                    暂无信息
+                                </Text>
+                            )
+                        }
+                    }
                     {this.state.refreshing ?
                         <ActivityIndicatorIOS
                             animating={this.state.refreshing}
@@ -117,51 +179,14 @@ class Thumb extends React.Component {
     render() {
         return (
             <View style={styles.button}>
-                <Text>{this.props.data.name}</Text>
-                <Text>{this.props.data.createtime}</Text>
-                <Text>{this.props.data.description}</Text>
+                <Text>{this.props.data.title}</Text>
+                <Text>{ moment(this.props.data.uptime *1000).format('lll')}</Text>
+                <Text>{ this.props.data.content }</Text>
             </View>
         );
     }
 }
 
-var THUMBS = [
-    {
-        name: '搞工业4.0，离不开对数据灵魂的把握',
-        createtime: '2015-12-01 00:00',
-        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
-    },
-    {
-        name: '搞工业4.0，离不开对数据灵魂的把握',
-        createtime: '2015-12-01 00:00',
-        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
-    },
-    {
-        name: '搞工业4.0，离不开对数据灵魂的把握',
-        createtime: '2015-12-01 00:00',
-        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
-    },
-    {
-        name: '搞工业4.0，离不开对数据灵魂的把握',
-        createtime: '2015-12-01 00:00',
-        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
-    },
-    {
-        name: '搞工业4.0，离不开对数据灵魂的把握',
-        createtime: '2015-12-01 00:00',
-        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
-    },
-    {
-        name: '搞工业4.0，离不开对数据灵魂的把握',
-        createtime: '2015-12-01 00:00',
-        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
-    },
-    {
-        name: '搞工业4.0，离不开对数据灵魂的把握',
-        createtime: '2015-12-01 00:00',
-        description: '大数据时代，国家竞争力体现为一国拥有数据的规模、质量，以及运用数据的能力。大数据正在人们的经济生活中扮演越来越重要的角色。在“十三五”规划建议中也明确提出，实施国家大数据战略，推进数据资源开放共享。'
-    },
-];
 
 var createThumbRow = (data, i) => <Thumb key={i} data={data}/>;
 

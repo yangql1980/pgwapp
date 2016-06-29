@@ -6,6 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "locutus": "^2.0.5",
+    "moment": "^2.13.0",
     "react": "15.0.2",
     "react-native": "^0.26.1",
     "react-native-navigator-router": "^0.2.0",
@@ -15,7 +17,8 @@
     "react-router": "^2.4.1",
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "requirejs": "^2.2.0"
   },
   "devDependencies": {
     "redux-devtools": "^3.3.1"
