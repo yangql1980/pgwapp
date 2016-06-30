@@ -30,7 +30,7 @@ export default class ScrollList extends React.Component {
             refreshing: false,
             dataSource: null,
             page: 1,  //当前第几页
-            num: 10,   //每页多少条数据
+            num: 5,   //每页多少条数据
             scrollStyles: null
         }
     }
@@ -41,41 +41,46 @@ export default class ScrollList extends React.Component {
         this.fetchData();
     }
 
-    fetchData(p) {
-        if (parseInt(p) >= 1)
-            this.setState({
-                page: p
-            });
-        console.log('开始读取数据');
+    fetchData() {
+        console.log('开始读取数据,第' + this.state.page + '页');
         try {
             fetch(api.home_article, {
                 method: 'POST',
-                headers: ""
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "page=" + this.state.page + '&num=' + this.state.num
             })
                 .then((response) => response.json())
                 .then((responseData)=> {
                     var data = [];
                     if (responseData.code == 200) {
-                        // console.log(responseData);
+                        // console.log("page="+this.state.page+'&num='+this.state.num);
+                        console.log(responseData);
                         // for (i in responseData.data) {
                         //
                         //     // i.content = base64_decode(i.content);
                         //     data.push(i);
                         // }
                         // console.log('这是的订单',this.state.page);
-                        if(this.state.page>1) {
-                            data=this.state.dataSource;
+                        if (this.state.page > 1) {
+                            data = this.state.dataSource;
                             // console.log('怨谁',this.state.dataSource);
-                            data.concat(responseData.data);
-                            for(i in responseData.data){
-                                data.push(responseData.data[i]);
-                            }
+                            data = data.concat(responseData.data);
+
                             // console.log('进入啦啊',data);
 
-                        }else
+                        } else
                             data = responseData.data;
                         // console.log('得到的最后数据',data);
-                    } else
+                    } else if( responseData.code !==200){
+                        var page=this.state.page;
+                        this.setState({
+                            page:page-1,
+                            refreshing:false
+                        });
+                        data=this.state.dataSource;
+                    }else
                         data.push({
                             title: '获取失败',
                             uptime: moment().format('L'),
@@ -84,13 +89,13 @@ export default class ScrollList extends React.Component {
                     // console.log(data);
                     this.setState({
                         dataSource: data,
-                        refreshing: false,
-                    })
+                        refreshing: false
+                    });
                     console.log('读取数据结束');
 
                 });
         } catch (e) {
-            console.log(e);
+            // console.log(e);
         }
 
     }
@@ -105,29 +110,40 @@ export default class ScrollList extends React.Component {
             this._onEndfresh();
     }
 
-    //上拉刷新
+    //下拉刷新
     _onRefresh() {
         this.setState({
-            refreshing: true
+            refreshing: true,
+            page: 1
         });
-        console.log('下拉刷新');
-        // fetch('https://www.baidu.com').then(()=> {
-        //     this.setState({refreshing: false});
-        // })
-        this.fetchData(1);
+        setTimeout(function () {
+            console.log('下拉刷新',this.state.page);
+            // fetch('https://www.baidu.com').then(()=> {
+            //     this.setState({refreshing: false});
+            // })
+            this.fetchData();
+        }.bind(this),2000);
     }
 
     //上拉刷新
     _onEndfresh() {
+        if (this.state.refreshing === true)
+            return;
+        var page=this.state.page;
+
         this.setState({
-            refreshing: true
+            refreshing: true,
+            page:page+1
         });
-        // alert('aaa');
-        console.log('上拉刷新');
-        // setTimeout(()=>fetch('https://www.baidu.com').then(()=> {
-        //     this.setState({refreshing: false});
-        // }), 2000);
-        this.fetchData(this.state.page + 1);
+        setTimeout(function () {
+            // alert('aaa');
+            console.log('上拉刷新',this.state.page);
+            // setTimeout(()=>fetch('https://www.baidu.com').then(()=> {
+            //     this.setState({refreshing: false});
+            // }), 2000);
+            this.fetchData();
+        }.bind(this),2000);
+
     }
 
     _onLayout(e) {
@@ -192,17 +208,19 @@ class Thumb extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
         return false;
     }
+
     static contextTypes = {
         router: React.PropTypes.object.isRequired,
     };
+
     render() {
         var str = this.props.data.content;
         str = str.replace(/style="(.*)"/g, '');
         str = str.replace(/&nbsp;/g, '');
-        str=str.replace(/<br>/);
+        str = str.replace(/<br>/);
         // console.log(str);
         return (
-            <TouchableHighlight onPress={() => this.context.router.push('/article/'+this.props.data.article_id)} >
+            <TouchableHighlight onPress={() => this.context.router.push('/article/'+this.props.data.article_id)}>
                 <View style={styles.button}>
                     <Text>{this.props.data.title}</Text>
                     <Text>{ moment(this.props.data.uptime * 1000).format('lll')}</Text>
