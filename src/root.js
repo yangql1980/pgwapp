@@ -7,6 +7,7 @@ import App from './containers/app';
 import About from  './containers/about';
 import Detail from './containers/detail';
 import Index from './containers/index';
+import Article from './containers/article';
 
 class PGW extends Component {
     render() {
@@ -16,6 +17,7 @@ class PGW extends Component {
                     <IndexRoute component={App}/>
                     <Route path="/about" component={About}/>
                     <Route path="/detail" component={Detail}/>
+                    <Route path="/article/:id" component={Article}/>
                     <Route path="/index" component={Index}/>
                 </Route>
             </Router>

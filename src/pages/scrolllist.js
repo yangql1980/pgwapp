@@ -2,6 +2,7 @@ import  React from  'react';
 import {
     View,
     TouchableOpacity,
+    TouchableHighlight,
     Text,
     Image,
     ActivityIndicatorIOS,
@@ -12,14 +13,17 @@ import {
 } from 'react-native';
 
 
-
 import api  from '../common/config';
 // import moment from 'moment';
 var moment = require('moment');
 var zh_cn = require('moment/locale/zh-cn');
-import base64_decode from 'locutus/php/url/base64_decode';
+// import base64_decode from 'locutus/php/url/base64_decode';
+import Html from 'react-native-fence-html';
+
+// xss.whiteList
 
 export default class ScrollList extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -31,48 +35,61 @@ export default class ScrollList extends React.Component {
         }
     }
 
+
     componetDidMount() {
         console.log('滚动列表开始');
         this.fetchData();
     }
 
     fetchData(p) {
-        if(parseInt(p)>=1)
+        if (parseInt(p) >= 1)
             this.setState({
-                refreshing:true,
-                page:p
+                page: p
             });
         console.log('开始读取数据');
         try {
-            // fetch('http://localhost/api.php')
-            fetch(api.home_article)
-            // fetch('https://www.pgw.com/getapi-index')
+            fetch(api.home_article, {
+                method: 'POST',
+                headers: ""
+            })
                 .then((response) => response.json())
                 .then((responseData)=> {
                     var data = [];
                     if (responseData.code == 200) {
-                        console.log(responseData);
+                        // console.log(responseData);
                         // for (i in responseData.data) {
                         //
                         //     // i.content = base64_decode(i.content);
                         //     data.push(i);
                         // }
-                        data=responseData.data;
+                        // console.log('这是的订单',this.state.page);
+                        if(this.state.page>1) {
+                            data=this.state.dataSource;
+                            // console.log('怨谁',this.state.dataSource);
+                            data.concat(responseData.data);
+                            for(i in responseData.data){
+                                data.push(responseData.data[i]);
+                            }
+                            // console.log('进入啦啊',data);
+
+                        }else
+                            data = responseData.data;
+                        // console.log('得到的最后数据',data);
                     } else
                         data.push({
                             title: '获取失败',
                             uptime: moment().format('L'),
                             content: '网络连接中断,获取数据失败!',
                         });
-                    console.log(data);
+                    // console.log(data);
                     this.setState({
                         dataSource: data,
-                        refreshing:false,
+                        refreshing: false,
                     })
                     console.log('读取数据结束');
 
                 });
-        }catch (e){
+        } catch (e) {
             console.log(e);
         }
 
@@ -110,7 +127,7 @@ export default class ScrollList extends React.Component {
         // setTimeout(()=>fetch('https://www.baidu.com').then(()=> {
         //     this.setState({refreshing: false});
         // }), 2000);
-        this.fetchData(this.state.page+1);
+        this.fetchData(this.state.page + 1);
     }
 
     _onLayout(e) {
@@ -175,14 +192,23 @@ class Thumb extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
         return false;
     }
-
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired,
+    };
     render() {
+        var str = this.props.data.content;
+        str = str.replace(/style="(.*)"/g, '');
+        str = str.replace(/&nbsp;/g, '');
+        str=str.replace(/<br>/);
+        // console.log(str);
         return (
-            <View style={styles.button}>
-                <Text>{this.props.data.title}</Text>
-                <Text>{ moment(this.props.data.uptime *1000).format('lll')}</Text>
-                <Text>{ this.props.data.content }</Text>
-            </View>
+            <TouchableHighlight onPress={() => this.context.router.push('/article/'+this.props.data.article_id)} >
+                <View style={styles.button}>
+                    <Text>{this.props.data.title}</Text>
+                    <Text>{ moment(this.props.data.uptime * 1000).format('lll')}</Text>
+                    <Html html={str.substr(0,120)}/>
+                </View>
+            </TouchableHighlight>
         );
     }
 }

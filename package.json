@@ -8,8 +8,9 @@
   "dependencies": {
     "locutus": "^2.0.5",
     "moment": "^2.13.0",
-    "react": "15.0.2",
+    "react": "^15.0.2",
     "react-native": "^0.26.1",
+    "react-native-fence-html": "^1.0.5",
     "react-native-navigator-router": "^0.2.0",
     "react-native-swiper": "^1.4.5",
     "react-native-vector-icons": "^2.0.3",
@@ -18,7 +19,8 @@
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
-    "requirejs": "^2.2.0"
+    "requirejs": "^2.2.0",
+    "xss": "^0.2.13"
   },
   "devDependencies": {
     "redux-devtools": "^3.3.1"
