@@ -18,9 +18,7 @@
     "react-router": "^2.4.1",
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
-    "redux-thunk": "^2.1.0",
-    "requirejs": "^2.2.0",
-    "xss": "^0.2.13"
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "redux-devtools": "^3.3.1"
