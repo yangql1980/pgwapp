@@ -73,19 +73,23 @@ export default class ScrollList extends React.Component {
                         } else
                             data = responseData.data;
                         // console.log('得到的最后数据',data);
-                    } else if( responseData.code !==200){
-                        var page=this.state.page;
+                    } else if (responseData.code !== 200) {
+                        var page = this.state.page;
                         this.setState({
-                            page:page-1,
-                            refreshing:false
+                            page: page - 1,
+                            refreshing: false
                         });
-                        data=this.state.dataSource;
-                    }else
+                        data = this.state.dataSource;
+                    } else {
                         data.push({
                             title: '获取失败',
                             uptime: moment().format('L'),
                             content: '网络连接中断,获取数据失败!',
                         });
+                        this.setState({
+                            page: (this.state.page > 1) ? (this.state.page - 1) : 0
+                        })
+                    }
                     // console.log(data);
                     this.setState({
                         dataSource: data,
@@ -117,32 +121,32 @@ export default class ScrollList extends React.Component {
             page: 1
         });
         setTimeout(function () {
-            console.log('下拉刷新',this.state.page);
+            console.log('下拉刷新', this.state.page);
             // fetch('https://www.baidu.com').then(()=> {
             //     this.setState({refreshing: false});
             // })
             this.fetchData();
-        }.bind(this),2000);
+        }.bind(this), 2000);
     }
 
     //上拉刷新
     _onEndfresh() {
         if (this.state.refreshing === true)
             return;
-        var page=this.state.page;
+        var page = this.state.page;
 
         this.setState({
             refreshing: true,
-            page:page+1
+            page: page + 1
         });
         setTimeout(function () {
             // alert('aaa');
-            console.log('上拉刷新',this.state.page);
+            console.log('上拉刷新', this.state.page);
             // setTimeout(()=>fetch('https://www.baidu.com').then(()=> {
             //     this.setState({refreshing: false});
             // }), 2000);
             this.fetchData();
-        }.bind(this),2000);
+        }.bind(this), 2000);
 
     }
 
