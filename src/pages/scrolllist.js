@@ -221,7 +221,7 @@ class Thumb extends React.Component {
         var str = this.props.data.content;
         str = str.replace(/style="(.*)"/g, '');
         str = str.replace(/&nbsp;/g, '');
-        str = str.replace(/<br>/);
+        str = str.replace(/<br>/,'');
         // console.log(str);
         return (
             <TouchableHighlight onPress={() => this.context.router.push('/article/'+this.props.data.article_id)}>

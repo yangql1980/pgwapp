@@ -11,6 +11,7 @@
     "react": "^15.0.2",
     "react-native": "^0.26.1",
     "react-native-fence-html": "^1.0.5",
+    "react-native-html-render": "^1.0.4",
     "react-native-navigator-router": "^0.2.0",
     "react-native-swiper": "^1.4.5",
     "react-native-vector-icons": "^2.0.3",
