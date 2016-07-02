@@ -18,7 +18,8 @@ import api  from '../common/config';
 var moment = require('moment');
 var zh_cn = require('moment/locale/zh-cn');
 // import base64_decode from 'locutus/php/url/base64_decode';
-import Html from 'react-native-fence-html';
+// import Html from 'react-native-fence-html';
+import HtmlRender from 'react-native-html-render';
 
 // xss.whiteList
 
@@ -218,17 +219,14 @@ class Thumb extends React.Component {
     };
 
     render() {
-        var str = this.props.data.content;
-        str = str.replace(/style="(.*)"/g, '');
-        str = str.replace(/&nbsp;/g, '');
-        str = str.replace(/<br>/,'');
+        var str = this.props.data.content.replace(/<(.|\n)+?>/gi, "").replace(/[\r\0\s]{0,}/g,"");
         // console.log(str);
         return (
             <TouchableHighlight onPress={() => this.context.router.push('/article/'+this.props.data.article_id)}>
                 <View style={styles.button}>
                     <Text>{this.props.data.title}</Text>
                     <Text>{ moment(this.props.data.uptime * 1000).format('lll')}</Text>
-                    <Html html={str.substr(0,120)}/>
+                    <HtmlRender value={'<p>'+str.substr(0,120)+'</p>'} stylesheet={{p:{fontSize:14,lineHeight:14},pwrapper:200}}/>
                 </View>
             </TouchableHighlight>
         );
