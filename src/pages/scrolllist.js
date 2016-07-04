@@ -226,7 +226,7 @@ class Thumb extends React.Component {
                 <View style={styles.button}>
                     <Text>{this.props.data.title}</Text>
                     <Text>{ moment(this.props.data.uptime * 1000).format('lll')}</Text>
-                    <HtmlRender value={'<p>'+str.substr(0,120)+'</p>'} stylesheet={{p:{fontSize:14,lineHeight:14},pwrapper:200}}/>
+                    <HtmlRender value={'<p>'+str.substr(0,120)+'</p>'} stylesheet={{p:{fontSize:14,lineHeight:14}}}/>
                 </View>
             </TouchableHighlight>
         );

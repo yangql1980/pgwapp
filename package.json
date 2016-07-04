@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "build": "browserify -t [reactify --es6] talt/App.jsx > build/app.js",
+    "startAlt": "npm run build && open 'index.html' "
   },
   "dependencies": {
     "alt": "^0.18.4",
@@ -11,18 +13,12 @@
     "moment": "^2.13.0",
     "react": "^15.0.2",
     "react-native": "^0.26.1",
-    "react-native-fence-html": "^1.0.5",
     "react-native-html-render": "^1.0.4",
     "react-native-navigator-router": "^0.2.0",
     "react-native-swiper": "^1.4.5",
     "react-native-vector-icons": "^2.0.3",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
-    "react-router-redux": "^4.0.5",
-    "redux": "^3.5.2",
-    "redux-thunk": "^2.1.0"
-  },
-  "devDependencies": {
-    "redux-devtools": "^3.3.1"
+    "react-router-redux": "^4.0.5"
   }
 }

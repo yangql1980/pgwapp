@@ -104,7 +104,7 @@ class Article extends Component {
             .replace(/^\s{0,}[\r\n]/g, '')
             .replace(/\s[\r\n]/g, '')
             .replace(/\s/g, '');
-        // console.log(str);
+        console.log(str);
 
         return (
             <View style={[styles.container,{alignItems:'flex-start'}]}>
@@ -121,7 +121,7 @@ class Article extends Component {
                 <ScrollView style={{padding:10}}>
                     <HtmlRender value={'<div>'+str+'</div>'} stylesheet={
                     {
-                    pwrapper:480,
+                    pwrapper:{margin:0},
                     p:{
                     margin:0,
                     padding:0,
