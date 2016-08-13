@@ -6,17 +6,17 @@ import Swiper from 'react-native-swiper';
 
 const images = [
     {
-        key: 'http://120.27.108.168/demohtml/app/images/banner1.jpg',
+        key: require('../images/banner1.jpg'),
         name: 'one',
         link: 'detail'
     },
     {
-        key: 'http://120.27.108.168/demohtml/app/images/banner2.jpg',
+        key: require('../images/banner2.jpg'),
         name: 'two',
         link: 'about'
     },
     {
-        key: 'http://120.27.108.168/demohtml/app/images/banner3.jpg',
+        key: require('../images/banner3.jpg'),
         name: 'three'
     }
 ];
@@ -76,7 +76,7 @@ export  default class SwiperImage extends React.Component {
                                 <Image
                                     style={styles.bannerImage}
                                     resizeMode="contain"
-                                    source={{uri: banner.key}}
+                                    source={ banner.key}
                                 />
                             </TouchableOpacity>
                         );

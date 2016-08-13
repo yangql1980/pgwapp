@@ -22,7 +22,7 @@ export default class Header extends Component {
                 style={styles.container}>
                 <View style={{width:200,height:50}}>
                     <Image
-                        source={require( '../images/logo.png')}
+                        source={require('../images/logo.png')}
                         resizeMode="contain"
                         style={styles.image}
                     />
@@ -43,21 +43,25 @@ const styles = StyleSheet.create({
         backgroundColor: '#FCFFFF',
         justifyContent: 'center',
         alignItems: 'center',
+        height:50
     },
     image: {
         margin: 0,
         padding: 0,
-        width: 180
+        width: 180,
+        height:50
     },
     rightContainer: {
         flex: 1,
         alignItems: 'flex-end',
         marginRight: 10,
+        height:50
     },
     icon: {
         width: 36,
         borderRadius: 0,
         alignSelf: 'center',
+        height:36
     }
 });
 
