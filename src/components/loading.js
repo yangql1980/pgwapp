@@ -6,7 +6,7 @@ import {
     StyleSheet,
     View,
     Text,
-    ActivityIndicatorIOS,
+    ActivityIndicator,
     Dimensions,
 } from 'react-native';
 
@@ -29,7 +29,7 @@ export default class Loading extends React.Component {
     render() {
         return (
             <View style={styles.loading}>
-                <ActivityIndicatorIOS color="white"/>
+                <ActivityIndicator color="white"/>
                 <Text style={styles.loadingTitle}>加载中……</Text>
             </View>
         )

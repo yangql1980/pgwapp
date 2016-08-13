@@ -1,11 +1,11 @@
-import  React from  'react';
+import React from  'react';
 import {
     View,
     TouchableOpacity,
     TouchableHighlight,
     Text,
     Image,
-    ActivityIndicatorIOS,
+    ActivityIndicator,
     ScrollView,
     StyleSheet,
     RefreshControl,
@@ -53,7 +53,7 @@ export default class ScrollList extends React.Component {
                 body: "page=" + this.state.page + '&num=' + this.state.num
             })
                 .then((response) => response.json())
-                .then((responseData)=> {
+                .then((responseData) => {
                     var data = [];
                     if (responseData.code == 200) {
                         // console.log("page="+this.state.page+'&num='+this.state.num);
@@ -106,11 +106,11 @@ export default class ScrollList extends React.Component {
     }
 
     handleScroll(e) {
-//         console.log(e.nativeEvent);
+        //         console.log(e.nativeEvent);
         let scrollH = e.nativeEvent.contentSize.height;
         let y = e.nativeEvent.contentOffset.y;
         let height = e.nativeEvent.layoutMeasurement.height;
-//         console.log('handle scroll', scrollH, y, height);
+        //         console.log('handle scroll', scrollH, y, height);
         if (scrollH - height < y)
             this._onEndfresh();
     }
@@ -165,16 +165,16 @@ export default class ScrollList extends React.Component {
 
     render() {
         return (
-            <View onLayout={(e)=>this._onLayout(e)} style={this.state.scrollStyles}>
+            <View onLayout={(e) => this._onLayout(e) } style={this.state.scrollStyles}>
                 <ScrollView
-                    ref={(scrollView) => { _scrollView = scrollView; }}
+                    ref={(scrollView) => { _scrollView = scrollView; } }
                     automaticallyAdjustContentInsets={false}
-                    onScroll={(e)=>this.handleScroll(e)}
+                    onScroll={(e) => this.handleScroll(e) }
                     refreshControl={
                         <RefreshControl
                             refreshing = {this.state.refreshing}
-                            onRefresh={this._onRefresh.bind(this)}
-                        />
+                            onRefresh={this._onRefresh.bind(this) }
+                            />
                     }
                     scrollEventThrottle={200}
                     style={styles.scrollView}>
@@ -182,7 +182,7 @@ export default class ScrollList extends React.Component {
                         ?
                         this.state.dataSource.map(createThumbRow)
                         :
-                        ()=> {
+                        () => {
                             return (
                                 <Text>
                                     暂无信息
@@ -191,14 +191,14 @@ export default class ScrollList extends React.Component {
                         }
                     }
                     {this.state.refreshing ?
-                        <ActivityIndicatorIOS
+                        <ActivityIndicator
                             animating={this.state.refreshing}
-                            style={ {height: 80,alignItems: 'center',    justifyContent: 'center',}}
+                            style={ { height: 80, alignItems: 'center', justifyContent: 'center', }}
                             size="large"
                             color="white"
-                        />
+                            />
                         :
-                        <TouchableOpacity style={styles.button} onPress={() => { _scrollView.scrollTo({y: 0}); }}>
+                        <TouchableOpacity style={styles.button} onPress={() => { _scrollView.scrollTo({ y: 0 }); } }>
                             <Text>Scroll to top</Text>
                         </TouchableOpacity>
                     }
@@ -214,26 +214,26 @@ class Thumb extends React.Component {
         return false;
     }
 
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired,
-    };
+
 
     render() {
-        var str = this.props.data.content.replace(/<(.|\n)+?>/gi, "").replace(/[\r\0\s]{0,}/g,"");
+        var str = this.props.data.content.replace(/<(.|\n)+?>/gi, "").replace(/[\r\0\s]{0,}/g, "");
         // console.log(str);
         return (
-            <TouchableHighlight onPress={() => this.context.router.push('/article/'+this.props.data.article_id)}>
+            <TouchableHighlight onPress={() => this.context.router.push('/article/' + this.props.data.article_id) }>
                 <View style={styles.button}>
                     <Text>{this.props.data.title}</Text>
-                    <Text>{ moment(this.props.data.uptime * 1000).format('lll')}</Text>
-                    <HtmlRender value={'<p>'+str.substr(0,120)+'</p>'} stylesheet={{p:{fontSize:14,lineHeight:14}}}/>
+                    <Text>{ moment(this.props.data.uptime * 1000).format('lll') }</Text>
+                    <HtmlRender value={'<p>' + str.substr(0, 120) + '</p>'} stylesheet={{ p: { fontSize: 14, lineHeight: 14 } }}/>
                 </View>
             </TouchableHighlight>
         );
     }
 }
 
-
+Thumb.contextTypes = {
+    router: React.PropTypes.object.isRequired,
+};
 var createThumbRow = (data, i) => <Thumb key={i} data={data}/>;
 
 let window = {

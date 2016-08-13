@@ -1,4 +1,4 @@
-import React, {Component,} from 'react'
+import React, {Component, } from 'react'
 import {View, Text, TouchableOpacity, Image, Dimensions, StyleSheet, ListView} from 'react-native'
 
 import Loading from '../components/loading';
@@ -8,9 +8,7 @@ import ScrollList from '../pages/scrolllist';
 
 
 class Index extends Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
+
 
     constructor(props) {
         super(props);
@@ -21,7 +19,7 @@ class Index extends Component {
 
     componentDidMount() {
         console.log('home 进入');
-        setTimeout(()=>this.setState({
+        setTimeout(() => this.setState({
             loaded: true,
         }), 2);
     }
@@ -37,26 +35,26 @@ class Index extends Component {
                 <SwiperImage />
 
                 <View style={styles.toolContainer}>
-                    <TouchableOpacity onPress={()=>this.context.router.push('/')}>
-                        <Image source={{uri:'http://120.27.108.168/demohtml/app/images/1a.jpg'}}
-                               resizeMode="contain"
-                               style={styles.image}/>
+                    <TouchableOpacity onPress={() => this.context.router.push('/') }>
+                        <Image source={require('../images/1a.jpg')}
+                            resizeMode="contain"
+                            style={styles.image}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.context.router.push('/')}>
-                        <Image source={{uri:'http://120.27.108.168/demohtml/app/images/2a.jpg'}}
-                               resizeMode="contain"
-                               style={[styles.image,{marginLeft:5}]}/>
+                    <TouchableOpacity onPress={() => this.context.router.push('/') }>
+                        <Image source={require('../images/2a.jpg')}
+                            resizeMode="contain"
+                            style={[styles.image, { marginLeft: 5 }]}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.context.router.push('/')}>
-                        <Image source={{uri:'http://120.27.108.168/demohtml/app/images/3a.jpg'}}
-                               resizeMode="contain"
-                               style={styles.image}/>
+                    <TouchableOpacity onPress={() => this.context.router.push('/') }>
+                        <Image source={require('../images/3a.jpg')}
+                            resizeMode="contain"
+                            style={styles.image}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.context.router.push('/')}>
-                        <Image source={{uri:'http://120.27.108.168/demohtml/app/images/4a.jpg'}}
-                               resizeMode="contain"
-                               onPress={()=>this.context.router.push('/')}
-                               style={[styles.image,{marginLeft:5}]}/>
+                    <TouchableOpacity onPress={() => this.context.router.push('/') }>
+                        <Image source={require('../images/4a.jpg')}
+                            resizeMode="contain"
+                            onPress={() => this.context.router.push('/') }
+                            style={[styles.image, { marginLeft: 5 }]}/>
                     </TouchableOpacity>
                 </View>
                 <ScrollList />
@@ -88,4 +86,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     }
 });
+Index.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 export default Index

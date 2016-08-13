@@ -52,5 +52,3 @@ export default class TabBarIOSView extends React.Component {
         )
     }
 }
-
-export default TabBarIOSView

@@ -1,12 +1,10 @@
-import React, {Component,} from 'react'
+import React, {Component, } from 'react'
 import {View, TouchableHighlight, Text, StyleSheet} from 'react-native'
 
 import styles from '../css/styles';
 
 class Detail extends Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired,
-    };
+
 
     static defaultProps() {
         return {
@@ -27,7 +25,7 @@ class Detail extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableHighlight onPress={() => this.context.router.replace('/')}>
+                <TouchableHighlight onPress={() => this.context.router.replace('/') }>
                     <Text style={styles.welcome}>
                         This is detail, Press here to go back home.
                     </Text>
@@ -36,4 +34,7 @@ class Detail extends Component {
         );
     }
 }
+Detail.contextTypes = {
+    router: React.PropTypes.object.isRequired,
+};
 export default Detail

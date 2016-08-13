@@ -5,9 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default class Header extends Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
+
 
     constructor(props) {
         super(props);
@@ -62,3 +60,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     }
 });
+
+Header.contextTypes={
+    router: React.PropTypes.object.isRequired
+}

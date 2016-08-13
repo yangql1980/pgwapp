@@ -1,4 +1,4 @@
-import React, {Component,} from 'react'
+import React, {Component, } from 'react'
 import {View, Alert, ScrollView, Dimensions, TouchableHighlight, Text, StyleSheet, Linking} from 'react-native'
 
 import styles from '../css/styles';
@@ -10,7 +10,7 @@ var zh_cn = require('moment/locale/zh-cn');
 import HtmlRender from 'react-native-html-render';
 // import {link} from '../utils';
 
-const {width, height} =Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 class Article extends Component {
 
     constructor(props) {
@@ -28,9 +28,7 @@ class Article extends Component {
         };
     }
 
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired,
-    };
+
 
     static defaultProps() {
         return {
@@ -55,8 +53,8 @@ class Article extends Component {
             },
             body: 'id=' + this.props.params.id
         })
-            .then((response)=>response.json())
-            .then((responseData)=> {
+            .then((response) => response.json())
+            .then((responseData) => {
                 // console.log(responseData)
                 if (responseData.code == 200) {
                     var index = responseData.data.indexs;
@@ -81,7 +79,7 @@ class Article extends Component {
                         '获取失败',
                         '数据获取失败,请将此信息截图发给管理员,{code :' + responseData.code + ',article_detail+id:' + this.props.params.id + '}',
                         [
-                            {text: '返回', onPress: () => this.context.router.go(-1)},
+                            { text: '返回', onPress: () => this.context.router.go(-1) },
                         ]
                     )
                 } else {
@@ -99,35 +97,36 @@ class Article extends Component {
 
     render() {
         var str = this.state.content;
-        if (str)str = str
-        // .replace(/<(.|\n)+?>/gi, "")
+        if (str) str = str
+            // .replace(/<(.|\n)+?>/gi, "")
             .replace(/^\s{0,}[\r\n]/g, '')
             .replace(/\s[\r\n]/g, '')
             .replace(/\s/g, '');
         console.log(str);
 
         return (
-            <View style={[styles.container,{alignItems:'flex-start'}]}>
+            <View style={[styles.container, { alignItems: 'flex-start' }]}>
                 <Text style={textStyles.title}>
 
                     {this.state.seo_title ? this.state.seo_title : this.state.title}
                     <Icon name="angle-left" color="#4F8EF7" size={25}
-                          style={{width:50,marginRight:10,fontSize:15,left:0}}
-                          onPress={() => this.context.router.replace('/')}
-                    >返回</Icon>
+                        style={{ width: 50, marginRight: 10, fontSize: 15, left: 0 }}
+                        onPress={() => this.context.router.replace('/') }
+                        >返回</Icon>
                 </Text>
                 <Text style={textStyles.author}>{this.state.author ? this.state.author : '未署名'}</Text>
                 <Text style={textStyles.uptime}>{this.state.uptime}</Text>
-                <ScrollView style={{padding:10}}>
-                    <HtmlRender value={'<div>'+str+'</div>'} stylesheet={
-                    {
-                    pwrapper:{margin:0},
-                    p:{
-                    margin:0,
-                    padding:0,
-                    fontSize:14,
-                    lineHeight:16}
-                    }}/>
+                <ScrollView style={{ padding: 10 }}>
+                    <HtmlRender value={'<div>' + str + '</div>'} stylesheet={
+                        {
+                            pwrapper: { margin: 0 },
+                            p: {
+                                margin: 0,
+                                padding: 0,
+                                fontSize: 14,
+                                lineHeight: 16
+                            }
+                        }}/>
                 </ScrollView>
             </View>
         );
@@ -161,4 +160,7 @@ const textStyles = StyleSheet.create({
     }
 
 });
+Article.contextTypes = {
+    router: React.PropTypes.object.isRequired,
+};
 export default Article
