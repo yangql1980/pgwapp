@@ -1,4 +1,4 @@
 import Reactotron from 'reactotron-react-native';
-REactotron
+Reactotron
    .configure()
    .connect();

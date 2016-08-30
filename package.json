@@ -8,12 +8,12 @@
     "startAlt": "npm run build && open 'index.html' "
   },
   "dependencies": {
-    "locutus": "^2.0.5",
     "moment": "^2.13.0",
     "react": "~15.2.1",
     "react-native": "^0.31.0",
     "react-native-html-render": "^1.0.4",
     "react-native-navigator-router": "^0.2.0",
+    "react-native-storage": "^0.1.3",
     "react-native-swiper": "^1.4.5",
     "react-native-vector-icons": "^2.0.3",
     "react-router": "^2.4.1"
